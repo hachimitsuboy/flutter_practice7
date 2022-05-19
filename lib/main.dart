@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:stream_provider/home_screen.dart';
+import 'package:stream_provider/todo_screen.dart';
 
 void main() {
   runApp(
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Combinning Provider",
       theme: ThemeData.dark(),
-      home: HomeScreen(),
+      home: TodoScreen(),
     );
   }
 }
