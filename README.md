@@ -1,16 +1,9 @@
 # combine_provider
 
-A new Flutter project.
+複数のProviderを組み合わせ、使用する
 
-## Getting Started
+## 自分用にメモ
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ref.watch: プロバイダの値を取得した上で、その変化を監視する。値が変化すると、その値に依存するウィジェットやプロバイダの更新が行われる。
+ref.listen: プロバイダの値を監視し、値が変化するたびに呼び出されるコールバック関数（画面遷移、ダイアログの表示など）を登録する。
+ref.read: プロバイダの値を取得する（監視はしない）。クリックイベント等の発生時に、その時点での値を取得する場合に使用できる。
