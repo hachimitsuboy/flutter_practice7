@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stream_provider/todo_screen.dart';
+import 'todo_screen.dart';
 
 class EditScreen extends ConsumerWidget {
-  final List<Todo> todoList;
 
-  EditScreen({required this.todoList});
 
   final TextEditingController _todoController = TextEditingController();
   var _deadLine = DateTime.now();
@@ -99,8 +97,8 @@ class EditScreen extends ConsumerWidget {
       deadLine: _deadLine,
     );
 
-    todoList.add(todo);
-    ref.read(todosProvider).add(todo);
+    //read→watch
+    ref.read(todosProvider.notifier).add(todo);
     Navigator.pop(context);
   }
 }
