@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
-import 'package:stream_provider/edit_screen.dart';
+import 'edit_screen.dart';
 
 class Todo {
   final String todoName;
@@ -25,12 +25,29 @@ enum SortType {
   deadLine,
 }
 
-final sortTypeProvider = StateProvider((ref) => SortType.completed);
-final todosProvider = Provider((ref) {
-  return _todoList;
+class TodosNotifier extends StateNotifier<List<Todo>> {
+  TodosNotifier(): super([]);
+
+  //stateとしてリストを与えている(例だと0とかint)
+  //イミュータブルのため以下のように.addのような書き方ができない
+  void add (Todo todo) {
+    //スプレット演算子
+    state = [...state, todo];
+  }
+
+  //今回は追加処理のみ
+
+}
+
+final todosProvider = StateNotifierProvider<TodosNotifier, List<Todo>>((ref) {
+  return TodosNotifier();
 });
 
-final sortTodosProvider = Provider((ref) {
+final sortTypeProvider = StateProvider<SortType>((ref) => SortType.deadLine);
+
+
+
+final sortTodosProvider = Provider<List<Todo>>((ref) {
   final sortType = ref.watch(sortTypeProvider);
   //EditScreenでtodoList(todosProvider)が追加されたことを監視しリビルドされる
   final todoList = ref.watch(todosProvider);
@@ -58,6 +75,7 @@ class TodoScreen extends ConsumerWidget {
         title: const Text("Todoリスト"),
       ),
       body: ListView.builder(
+        //read→watchへ
         itemCount: ref.watch(sortTodosProvider).length,
         itemBuilder: (context, int index) {
           return Card(
@@ -67,7 +85,8 @@ class TodoScreen extends ConsumerWidget {
             ),
             child: ListTile(
               leading: const Icon(Icons.check),
-              title: Text(ref.read(todosProvider)[index].todoName),
+              //read→watch
+              title: Text(ref.watch(sortTodosProvider)[index].todoName),
             ),
           );
         },
@@ -84,7 +103,7 @@ class TodoScreen extends ConsumerWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => EditScreen(todoList: _todoList),
+        builder: (_) => EditScreen(),
       ),
     );
   }
